@@ -2,7 +2,15 @@ const express = require('express')
 const app = express()
 let contacts = require('./contacts')
 const generateRandomId = require('./utils')
+var path = require('path')
+var fs = require('fs')
+const morgan = require('morgan')
 const PORT = 3001
+
+// create a write stream (in append mode)
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+
+app.use(morgan('tiny', { stream: accessLogStream }))
 
 app.get('/api/persons', (req, res) => {
     res.json(contacts)
