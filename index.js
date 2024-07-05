@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 let contacts = require('./contacts')
+const generateRandomId = require('./utils')
 const PORT = 3001
 
 app.get('/api/persons', (req, res) => {
@@ -8,7 +9,7 @@ app.get('/api/persons', (req, res) => {
 })
 
 app.get('/api/persons/:id', (req, res) => {
-    const id = Number(req.params.id)
+    const id = req.params.id
     const person = contacts.find(person => person.id === id)
     if (person) {
         res.json(person)
@@ -23,6 +24,23 @@ app.delete('/api/persons/:id', (req, res) => {
     res.status(204).end()
 })
 
+app.use(express.json())
+app.post('/api/persons', (req, res) => {
+    const person = req.body
+    if(!person.name || !person.number) {
+        return res.status(400).json({
+            error: 'name or number missing'
+        })
+    }
+    const newPerson = {
+        id: generateRandomId(5),
+        name: person.name,
+        number: person.number
+    }
+    contacts = contacts.concat(newPerson)
+    res.json(newPerson)
+})
+
 app.listen(PORT, () => {
     console.log(`Server running on port http://localhost:${PORT}`)
 })
@@ -31,3 +49,9 @@ app.get('/info', (req, res) => {
     const date = Date().toString()
     res.send(`<p>Phonebook has info for ${contacts.length} people</p><p>${date}</p>`)
 })
+
+const unknownEndpoint = (req, res) => {
+    res.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
