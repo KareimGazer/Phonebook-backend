@@ -32,6 +32,12 @@ app.post('/api/persons', (req, res) => {
             error: 'name or number missing'
         })
     }
+    const duplicates = contacts.filter(contact => contact.name === person.name || contact.number)
+    if(duplicates.length > 0) {
+        return res.status(400).json({
+            error: 'name and number must be unique'
+        })
+    }
     const newPerson = {
         id: generateRandomId(5),
         name: person.name,
