@@ -4,3 +4,18 @@ GET /api/persons/ 200 231 - 0.414 ms -
 GET /api/persons/ 200 231 - 0.337 ms -
 DELETE /api/persons/2 204 - - 0.290 ms -
 POST /api/persons/ 400 42 - 1.166 ms {"id":7,"name":"Kisho Tata","number":"+201212288518"}
+GET / 404 28 - 2.066 ms {}
+GET /persons 404 28 - 3.000 ms {}
+GET /persons 404 28 - 0.329 ms {}
+GET /persons 404 28 - 0.156 ms {}
+GET / 404 28 - 2.169 ms {}
+GET /api/persons 304 - - 0.642 ms -
+GET /api/persons 304 - - 0.376 ms -
+GET /api/persons 304 - - 0.196 ms -
+GET /api/persons 304 - - 0.198 ms -
+GET /api/persons 304 - - 0.242 ms -
+GET /api/persons 304 - - 0.258 ms -
+GET /api/persons 304 - - 0.274 ms -
+GET /api/persons 304 - - 0.342 ms -
+GET /api/persons 200 231 - 2.571 ms -
+GET /api/persons 304 - - 0.427 ms -
