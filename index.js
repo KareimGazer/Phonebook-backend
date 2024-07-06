@@ -31,7 +31,7 @@ app.get('/api/persons/:id', (req, res) => {
 })
 
 app.delete('/api/persons/:id', (req, res) => {
-    const id = Number(req.params.id)
+    const id = req.params.id
     contacts = contacts.filter(person => person.id !== id)
     res.status(204).end()
 })
@@ -44,7 +44,7 @@ app.post('/api/persons', (req, res) => {
             error: 'name or number missing'
         })
     }
-    const duplicates = contacts.filter(contact => contact.name === person.name || contact.number)
+    const duplicates = contacts.filter(contact => contact.name === person.name || contact.number === person.number)
     if(duplicates.length > 0) {
         return res.status(400).json({
             error: 'name and number must be unique'
@@ -57,6 +57,20 @@ app.post('/api/persons', (req, res) => {
     }
     contacts = contacts.concat(newPerson)
     res.json(newPerson)
+})
+
+app.put('/api/persons/:id', (req, res) => {
+    const id = req.params.id
+    const person = contacts.find(person => person.id === id)
+    if (person) {
+        person.name = req.body.name
+        person.number = req.body.number
+        res.json(person)
+    } else {
+        res.status(404).json({
+            error: 'person not found'
+        })
+    }
 })
 
 app.listen(PORT, () => {
