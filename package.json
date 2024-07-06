@@ -4,9 +4,13 @@
   "description": "The backend of the phonebook app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "@powershell Remove-Item -Recurse -Force dist && cd ../phonebook-frontend && npm run build && @powershell Copy-Item dist -Recurse ../phonebook-backend",
+    "deploy": "flyctl deploy",
+    "deploy:full": "npm run build:ui && npm run deploy",    
+    "logs:prod": "flyctl logs"
   },
   "repository": {
     "type": "git",
@@ -20,6 +24,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.7",
     "nodemon": "^3.1.4"
   }
 }

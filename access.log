@@ -90,3 +90,5 @@ PUT /api/persons/uR0FT 200 52 - 0.451 ms {"id":"uR0FT","name":"kisho","number":"
 OPTIONS /api/persons/uR0FT 204 0 - 0.112 ms -
 PUT /api/persons/uR0FT 200 52 - 0.458 ms {"id":"uR0FT","name":"kisho","number":"01212288514"}
 DELETE /api/persons/uR0FT 204 - - 0.135 ms -
+GET /api/persons 200 231 - 3.125 ms -
+GET /api/persons 304 - - 0.534 ms -

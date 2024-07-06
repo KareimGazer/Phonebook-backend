@@ -6,7 +6,7 @@ var path = require('path')
 var fs = require('fs')
 const morgan = require('morgan')
 const cors = require('cors')
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 
 // create a write stream (in append mode)
 var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
@@ -15,6 +15,8 @@ morgan.token('req-body', (req) => JSON.stringify(req.body))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :req-body', { stream: accessLogStream }))
 
 app.use(cors())
+
+app.use(express.static('dist'))
 
 app.get('/api/persons', (req, res) => {
     res.json(contacts)

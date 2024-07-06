@@ -1,0 +1,25 @@
+# fly.toml app configuration file generated for kisho-contacts on 2024-07-06T12:11:12+03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'kisho-contacts'
+primary_region = 'cdg'
+
+[build]
+
+[env]
+  PORT = "3000" # add this
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
